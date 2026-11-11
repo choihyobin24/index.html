@@ -1,550 +1,357 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>학생용 올인원 웹앱</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                        }
-                    }
-                }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>학생용 올인원 웹앱</title>
+  
+  <!-- Google Fonts: Jua, Gaegu -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
             }
+          },
+          fontFamily: {
+            jua: ['Jua', 'sans-serif'],
+            gaegu: ['Gaegu', 'cursive']
+          }
         }
-    </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts (Jua / Gaegu) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Jua&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Jua', 'Gaegu', sans-serif;
-            background-color: #f0f7ff;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        /* Custom Cute Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #93c5fd;
-            border-radius: 9999px;
-        }
-    </style>
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      font-family: 'Jua', sans-serif;
+      background-color: #f0f9ff;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #bfdbfe;
+      border-radius: 10px;
+    }
+  </style>
 </head>
-<body class="text-slate-800 antialiased pb-20">
+<body class="bg-blue-50/50 text-slate-800 min-h-screen pb-12">
 
-    <!-- Header -->
-    <header class="bg-brand-600 text-white p-4 shadow-md sticky top-0 z-50">
-        <div class="max-w-md mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-graduation-cap text-2xl text-yellow-300"></i>
-                <h1 class="text-xl font-bold tracking-wide">학생용 올인원 웹앱</h1>
-            </div>
-            <div class="flex items-center gap-1 bg-brand-700 text-brand-100 text-[11px] px-2.5 py-1 rounded-full">
-                <i class="fa-solid fa-shield-halved text-cyan-300"></i>
-                <span>개인정보 안심</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Chapter Navigation Bar -->
-    <nav class="bg-white border-b border-slate-200 sticky top-[60px] z-40 shadow-sm">
-        <div class="max-w-md mx-auto grid grid-cols-4 gap-1 p-2 text-center text-xs font-bold">
-            <a href="#chapter-timer" onclick="setActiveChapter('timer')" id="nav-timer" class="py-2 px-1 rounded-xl bg-brand-50 text-brand-600 flex flex-col items-center gap-1 transition-all shadow-sm">
-                <i class="fa-solid fa-clock text-base"></i>
-                <span>타이머</span>
-            </a>
-            <a href="#chapter-dday" onclick="setActiveChapter('dday')" id="nav-dday" class="py-2 px-1 rounded-xl text-slate-500 hover:bg-slate-50 flex flex-col items-center gap-1 transition-all">
-                <i class="fa-solid fa-calendar-check text-base"></i>
-                <span>D-Day</span>
-            </a>
-            <a href="#chapter-snack" onclick="setActiveChapter('snack')" id="nav-snack" class="py-2 px-1 rounded-xl text-slate-500 hover:bg-slate-50 flex flex-col items-center gap-1 transition-all">
-                <i class="fa-solid fa-utensils text-base"></i>
-                <span>매점 룰렛</span>
-            </a>
-            <a href="#chapter-split" onclick="setActiveChapter('split')" id="nav-split" class="py-2 px-1 rounded-xl text-slate-500 hover:bg-slate-50 flex flex-col items-center gap-1 transition-all">
-                <i class="fa-solid fa-calculator text-base"></i>
-                <span>N빵 정산</span>
-            </a>
-        </div>
-    </nav>
-
-    <!-- Main Container -->
-    <main class="max-w-md mx-auto p-4 space-y-6">
-
-        <!-- CHAPTER 1: TIMER -->
-        <section id="chapter-timer" class="space-y-4 pt-2">
-            <div class="flex items-center gap-2 border-b-2 border-brand-500 pb-2">
-                <span class="bg-brand-600 text-white text-xs px-2.5 py-1 rounded-lg font-bold">Chapter 1</span>
-                <h2 class="text-lg font-bold text-slate-800">⏱️ 과목별 & 시험 타이머</h2>
-            </div>
-            
-            <div class="bg-brand-50 border border-brand-100 rounded-2xl p-3 text-center">
-                <p class="text-xs text-brand-700">실전 감각을 키우는 교시별 타임어택 공부시간!</p>
-            </div>
-
-            <!-- Subject Mode Buttons -->
-            <div class="grid grid-cols-3 gap-2">
-                <button onclick="setTimerPreset(50, '자율공부 (50분)')" class="bg-white border-2 border-brand-100 hover:border-brand-500 p-2.5 rounded-xl text-center shadow-sm transition">
-                    <span class="block text-xs text-slate-500">📖 자율</span>
-                    <span class="font-bold text-sm text-brand-600">50분</span>
-                </button>
-                <button onclick="setTimerPreset(80, '국어 영역 (80분)')" class="bg-white border-2 border-brand-100 hover:border-brand-500 p-2.5 rounded-xl text-center shadow-sm transition">
-                    <span class="block text-xs text-slate-500">📝 1교시</span>
-                    <span class="font-bold text-sm text-brand-600">국어 80분</span>
-                </button>
-                <button onclick="setTimerPreset(100, '수학 영역 (100분)')" class="bg-white border-2 border-brand-100 hover:border-brand-500 p-2.5 rounded-xl text-center shadow-sm transition">
-                    <span class="block text-xs text-slate-500">📐 2교시</span>
-                    <span class="font-bold text-sm text-brand-600">수학 100분</span>
-                </button>
-                <button onclick="setTimerPreset(70, '영어 영역 (70분)')" class="bg-white border-2 border-brand-100 hover:border-brand-500 p-2.5 rounded-xl text-center shadow-sm transition">
-                    <span class="block text-xs text-slate-500">🔤 3교시</span>
-                    <span class="font-bold text-sm text-brand-600">영어 70분</span>
-                </button>
-                <button onclick="setTimerPreset(40, '탐구 영역 (40분)')" class="bg-white border-2 border-brand-100 hover:border-brand-500 p-2.5 rounded-xl text-center shadow-sm transition col-span-2">
-                    <span class="block text-xs text-slate-500">🧪 4교시</span>
-                    <span class="font-bold text-sm text-brand-600">탐구 40분</span>
-                </button>
-            </div>
-
-            <!-- Timer Display Card -->
-            <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 text-center">
-                <span id="timer-title" class="inline-block bg-brand-100 text-brand-700 text-sm px-3 py-1 rounded-full font-bold mb-3">
-                    자율공부 (50분)
-                </span>
-                <div class="text-5xl font-black text-slate-800 my-4 tracking-wider" id="timer-display">
-                    50:00
-                </div>
-                <div class="flex justify-center gap-3 mt-6">
-                    <button id="btn-start" onclick="toggleTimer()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-8 rounded-2xl shadow-lg hover:shadow-xl transition flex items-center gap-2">
-                        <i class="fa-solid fa-play"></i>
-                        <span>시작하기</span>
-                    </button>
-                    <button onclick="resetTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-5 rounded-2xl transition">
-                        <i class="fa-solid fa-rotate-right"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <hr class="border-slate-200 my-6">
-
-        <!-- CHAPTER 2: D-DAY & EXAM COUNTDOWN -->
-        <section id="chapter-dday" class="space-y-4 pt-2">
-            <div class="flex items-center gap-2 border-b-2 border-brand-500 pb-2">
-                <span class="bg-brand-600 text-white text-xs px-2.5 py-1 rounded-lg font-bold">Chapter 2</span>
-                <h2 class="text-lg font-bold text-slate-800">📅 D-Day & 시험 카운트다운</h2>
-            </div>
-
-            <div class="bg-brand-50 border border-brand-100 rounded-2xl p-3 text-center">
-                <p class="text-xs text-brand-700">시험, 방학, 수능 등 주요 일정을 스마트하게 챙겨보세요!</p>
-            </div>
-
-            <!-- Add D-Day Input Form -->
-            <div class="bg-white rounded-3xl p-5 shadow-md border border-slate-100 space-y-4">
-                <div class="text-xs font-bold text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-plus text-brand-500"></i> 나만의 D-Day 추가
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" id="dday-title-input" placeholder="예: 중간고사, 방학" class="border-2 border-slate-200 focus:border-brand-500 rounded-xl p-2.5 text-xs outline-none">
-                    <input type="date" id="dday-date-input" class="border-2 border-slate-200 focus:border-brand-500 rounded-xl p-2.5 text-xs outline-none">
-                </div>
-                <button onclick="addCustomDDay()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl shadow transition text-xs">
-                    + 일정 등록하기
-                </button>
-
-                <div class="text-xs font-bold text-slate-700 border-b pb-2 pt-2">
-                    🎯 주요 D-Day 목록
-                </div>
-                <div id="dday-list" class="space-y-2 text-xs">
-                    <!-- Loaded dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <hr class="border-slate-200 my-6">
-
-        <!-- CHAPTER 3: ROULETTE -->
-        <section id="chapter-snack" class="space-y-4 pt-2">
-            <div class="flex items-center gap-2 border-b-2 border-brand-500 pb-2">
-                <span class="bg-brand-600 text-white text-xs px-2.5 py-1 rounded-lg font-bold">Chapter 3</span>
-                <h2 class="text-lg font-bold text-slate-800">🥨 우리 학교 매점 간식 룰렛</h2>
-            </div>
-
-            <div class="bg-brand-50 border border-brand-100 rounded-2xl p-3 text-center">
-                <p class="text-xs text-brand-700">오늘 쉬는 시간에 먹을 메뉴가 고민된다면 즉석 추첨!</p>
-            </div>
-
-            <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 text-center relative overflow-hidden">
-                <div class="text-xs text-slate-400 mb-1">오늘 쉬는시간 매점 간식은?</div>
-                <div id="snack-display" class="text-2xl font-black text-brand-600 my-6 min-h-[52px] flex items-center justify-center bg-brand-50 rounded-2xl border border-brand-100 p-3">
-                    버튼을 눌러 룰렛을 돌려보세요!
-                </div>
-                <div id="snack-side" class="text-xs text-slate-500 mb-4 h-5"></div>
-                <button onclick="spinSnackRoulette()" id="btn-spin" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-base">
-                    <i class="fa-solid fa-dice"></i>
-                    <span>간식 룰렛 돌리기!</span>
-                </button>
-            </div>
-        </section>
-
-        <hr class="border-slate-200 my-6">
-
-        <!-- CHAPTER 4: CALCULATOR -->
-        <section id="chapter-split" class="space-y-4 pt-2">
-            <div class="flex items-center gap-2 border-b-2 border-brand-500 pb-2">
-                <span class="bg-brand-600 text-white text-xs px-2.5 py-1 rounded-lg font-bold">Chapter 4</span>
-                <h2 class="text-lg font-bold text-slate-800">💵 깔끔 우정 N빵 정산 계산기</h2>
-            </div>
-
-            <div class="bg-brand-50 border border-brand-100 rounded-2xl p-3 text-center">
-                <p class="text-xs text-brand-700">친구들이랑 먹은 음식값! 깔끔하게 입금 요청 문구 만들기</p>
-            </div>
-
-            <div class="bg-white rounded-3xl p-5 shadow-md border border-slate-100 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">총 나온 금액 (원)</label>
-                    <input type="number" id="split-total" placeholder="예: 32000" oninput="calculateSplit()" class="w-full border-2 border-slate-200 focus:border-brand-500 rounded-xl p-3 outline-none text-lg font-bold text-slate-800">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">함께 먹은 인원 (명)</label>
-                        <input type="number" id="split-people" value="4" min="1" oninput="calculateSplit()" class="w-full border-2 border-slate-200 focus:border-brand-500 rounded-xl p-3 outline-none text-base font-bold text-slate-800">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">선결제자 닉네임</label>
-                        <input type="text" id="split-payer" value="총무학생" oninput="calculateSplit()" class="w-full border-2 border-slate-200 focus:border-brand-500 rounded-xl p-3 outline-none text-base font-bold text-slate-800">
-                    </div>
-                </div>
-
-                <!-- Result Box -->
-                <div class="bg-brand-50 rounded-2xl p-4 border border-brand-100 text-center">
-                    <span class="text-xs font-bold text-brand-700">1인당 보낼 금액</span>
-                    <div id="split-per-person" class="text-3xl font-black text-brand-600 my-1">
-                        0원
-                    </div>
-                    <div id="split-rem" class="text-[11px] text-slate-500"></div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">입금 계좌 / 수단 정보 (선택)</label>
-                    <input type="text" id="split-account" placeholder="예: 토스아이디 또는 카카오뱅크 계좌" oninput="calculateSplit()" class="w-full border-2 border-slate-200 focus:border-brand-500 rounded-xl p-2.5 text-xs outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">카톡 정산용 완성 문구</label>
-                    <textarea id="split-text" readonly rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 outline-none resize-none font-sans"></textarea>
-                </div>
-
-                <button onclick="copySplitText()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-regular fa-copy"></i>
-                    <span>정산 문구 클립보드 복사</span>
-                </button>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white text-xs px-4 py-2.5 rounded-full shadow-lg opacity-0 transition-opacity pointer-events-none z-50">
-        메시지 내용
+  <!-- Header Section -->
+  <header class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-2xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <h1 class="text-2xl sm:text-3xl font-jua tracking-wide flex items-center gap-2">
+        <span>🎓</span> 학생용 올인원 웹앱
+      </h1>
+      <nav class="flex gap-2 text-sm sm:text-base">
+        <a href="#timer-section" class="bg-blue-700 hover:bg-blue-800 px-3 py-1 rounded-full transition">타이머</a>
+        <a href="#dday-section" class="bg-blue-700 hover:bg-blue-800 px-3 py-1 rounded-full transition">D-Day</a>
+        <a href="#snack-section" class="bg-blue-700 hover:bg-blue-800 px-3 py-1 rounded-full transition">매점 룰렛</a>
+        <a href="#split-section" class="bg-blue-700 hover:bg-blue-800 px-3 py-1 rounded-full transition">N빵 정산</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- Firebase SDK Modular Import -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  <main class="max-w-2xl mx-auto px-4 mt-6 space-y-8">
 
-        // Environment Firebase configuration fallback with safely handled structure
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config)
-            : {
-                apiKey: "SAFE_ANONYMOUS_CLIENT_KEY", 
-                authDomain: "student-2c849.firebaseapp.com",
-                projectId: "student-2c849",
-                storageBucket: "student-2c849.firebasestorage.app",
-                messagingSenderId: "440876925265",
-                appId: "1:440876925265:web:0329ca5b7bc468f90b5370"
-            };
+    <!-- Chapter 1: 과목별 시험/모의고사 타이머 -->
+    <section id="timer-section" class="bg-white p-6 rounded-3xl shadow-sm border border-blue-100">
+      <h2 class="text-xl text-blue-600 font-bold mb-4 flex items-center gap-2">
+        <span>⏱️</span> Chapter 1. 시험 & 모의고사 타이머
+      </h2>
+      
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-6">
+        <button onclick="setTimer(50, '자율공부')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-2 px-3 rounded-2xl text-sm border border-blue-200 transition">자율 50분</button>
+        <button onclick="setTimer(80, '국어')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-2 px-3 rounded-2xl text-sm border border-blue-200 transition">국어 80분</button>
+        <button onclick="setTimer(100, '수학')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-2 px-3 rounded-2xl text-sm border border-blue-200 transition">수학 100분</button>
+        <button onclick="setTimer(70, '영어')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-2 px-3 rounded-2xl text-sm border border-blue-200 transition">영어 70분</button>
+        <button onclick="setTimer(40, '탐구')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-2 px-3 rounded-2xl text-sm border border-blue-200 transition">탐구 40분</button>
+      </div>
 
-        try {
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            // Safe anonymous sign-in without requesting personal data
-            signInAnonymously(auth).then(() => {
-                console.log("Firebase Anonymous Session Secured.");
-            }).catch(() => {
-                console.log("Offline mode operating normally.");
-            });
-        } catch (e) {
-            console.log("Operating in local client mode.");
+      <div class="bg-blue-50/70 p-6 rounded-2xl text-center mb-6 border border-blue-100">
+        <div id="subject-label" class="text-blue-500 text-lg mb-1">과목을 선택해주세요</div>
+        <div id="timer-display" class="text-5xl font-mono font-bold text-blue-600 tracking-wider">00:00</div>
+      </div>
+
+      <div class="flex justify-center gap-3">
+        <button onclick="startTimer()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-bold shadow-md transition">시작</button>
+        <button onclick="pauseTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-2.5 rounded-full font-bold transition">일시정지</button>
+        <button onclick="resetTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-2.5 rounded-full font-bold transition">리셋</button>
+      </div>
+    </section>
+
+    <!-- Chapter 2: D-Day 및 시험 카운트다운 -->
+    <section id="dday-section" class="bg-white p-6 rounded-3xl shadow-sm border border-blue-100">
+      <h2 class="text-xl text-blue-600 font-bold mb-4 flex items-center gap-2">
+        <span>📅</span> Chapter 2. D-Day 카운트다운
+      </h2>
+
+      <div class="flex flex-col sm:flex-row gap-2 mb-6">
+        <input type="text" id="dday-title" placeholder="일정 이름 (예: 중간고사)" class="flex-1 px-4 py-2 rounded-2xl border border-slate-200 focus:outline-none focus:border-blue-500 font-gaegu text-lg" />
+        <input type="date" id="dday-date" class="px-4 py-2 rounded-2xl border border-slate-200 focus:outline-none focus:border-blue-500" />
+        <button onclick="addDDay()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-2xl font-bold transition">추가</button>
+      </div>
+
+      <div id="dday-list" class="space-y-2 max-h-60 overflow-y-auto custom-scroll pr-1"></div>
+    </section>
+
+    <!-- Chapter 3: 우리 학교 매점 간식 추천 룰렛 -->
+    <section id="snack-section" class="bg-white p-6 rounded-3xl shadow-sm border border-blue-100">
+      <h2 class="text-xl text-blue-600 font-bold mb-4 flex items-center gap-2">
+        <span>🥨</span> Chapter 3. 매점 간식 추천 룰렛
+      </h2>
+
+      <div class="bg-blue-50/70 p-6 rounded-2xl text-center mb-6 border border-blue-100">
+        <div id="snack-result" class="text-2xl font-bold text-blue-600 mb-2">무엇을 먹을까?</div>
+        <div id="snack-tip" class="text-slate-500 text-sm font-gaegu text-base">버튼을 눌러 매점 간식을 추천받아 보세요!</div>
+      </div>
+
+      <div class="text-center">
+        <button onclick="pickSnack()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold shadow-md transition text-lg">
+          간식 뽑기 🎲
+        </button>
+      </div>
+    </section>
+
+    <!-- Chapter 4: N빵 정산 계산기 -->
+    <section id="split-section" class="bg-white p-6 rounded-3xl shadow-sm border border-blue-100">
+      <h2 class="text-xl text-blue-600 font-bold mb-4 flex items-center gap-2">
+        <span>💸</span> Chapter 4. N빵 정산 계산기
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-slate-600 text-sm mb-1">총 금액 (원)</label>
+          <input type="number" id="total-amount" placeholder="예: 15000" class="w-full px-4 py-2 rounded-2xl border border-slate-200 focus:outline-none focus:border-blue-500" />
+        </div>
+        <div>
+          <label class="block text-slate-600 text-sm mb-1">인원 수 (명)</label>
+          <input type="number" id="total-people" placeholder="예: 3" class="w-full px-4 py-2 rounded-2xl border border-slate-200 focus:outline-none focus:border-blue-500" />
+        </div>
+      </div>
+
+      <button onclick="calculateSplit()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-2xl font-bold transition mb-4">
+        계산하기
+      </button>
+
+      <div id="split-result-box" class="hidden bg-blue-50/70 p-4 rounded-2xl border border-blue-100">
+        <div id="split-result-text" class="text-slate-700 font-gaegu text-xl mb-3 leading-relaxed"></div>
+        <button onclick="copySplitText()" class="w-full bg-blue-100 hover:bg-blue-200 text-blue-700 py-2 rounded-xl text-sm font-bold transition">
+          정산 내역 복사하기 📋
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAPPXswC1ursj13b3CFPgLuh5D5QzrQfz0",
+      authDomain: "student-2c849.firebaseapp.com",
+      projectId: "student-2c849",
+      storageBucket: "student-2c849.firebasestorage.app",
+      messagingSenderId: "440876925265",
+      appId: "1:440876925265:web:0329ca5b7bc468f90b5370"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    signInAnonymously(auth).catch((error) => {
+      console.log("Firebase Auth Info:", error.message);
+    });
+  </script>
+
+  <!-- Main Logic -->
+  <script>
+    let timerInterval = null;
+    let totalSeconds = 0;
+    let currentSubject = "";
+
+    function setTimer(minutes, subject) {
+      pauseTimer();
+      totalSeconds = minutes * 60;
+      currentSubject = subject;
+      document.getElementById('subject-label').innerText = `[${subject}] 진행 중`;
+      updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      document.getElementById('timer-display').innerText = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (totalSeconds <= 0 || timerInterval) return;
+      timerInterval = setInterval(() => {
+        if (totalSeconds > 0) {
+          totalSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          alert(`[${currentSubject}] 시간이 완료되었습니다!`);
         }
-    </script>
+      }, 1000);
+    }
 
-    <!-- Application Script Logic -->
-    <script>
-        // Navigation Active Chapter
-        function setActiveChapter(chapName) {
-            ['timer', 'dday', 'snack', 'split'].forEach(t => {
-                const navBtn = document.getElementById(`nav-${t}`);
-                if(t === chapName) {
-                    navBtn.className = "py-2 px-1 rounded-xl bg-brand-50 text-brand-600 flex flex-col items-center gap-1 transition-all shadow-sm font-bold";
-                } else {
-                    navBtn.className = "py-2 px-1 rounded-xl text-slate-500 hover:bg-slate-50 flex flex-col items-center gap-1 transition-all font-bold";
-                }
-            });
+    function pauseTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      totalSeconds = 0;
+      document.getElementById('subject-label').innerText = "과목을 선택해주세요";
+      document.getElementById('timer-display').innerText = "00:00";
+    }
+
+    let ddayItems = [
+      { id: 1, title: '2027 수능', date: '2026-11-19' }
+    ];
+
+    function renderDDay() {
+      const listEl = document.getElementById('dday-list');
+      listEl.innerHTML = '';
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      ddayItems.forEach(item => {
+        const targetDate = new Date(item.date);
+        targetDate.setHours(0,0,0,0);
+        const diffDays = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
+        
+        let ddayText = '';
+        if (diffDays > 0) ddayText = `D-${diffDays}`;
+        else if (diffDays === 0) ddayText = 'D-DAY';
+        else ddayText = `D+${Math.abs(diffDays)}`;
+
+        const card = document.createElement('div');
+        card.className = 'flex justify-between items-center bg-blue-50/50 px-4 py-3 rounded-2xl border border-blue-100';
+        card.innerHTML = `
+          <div>
+            <span class="font-bold text-slate-800">${item.title}</span>
+            <span class="text-xs text-slate-400 ml-2">${item.date}</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-blue-600 font-bold font-mono text-lg">${ddayText}</span>
+            <button onclick="deleteDDay(${item.id})" class="text-slate-400 hover:text-red-500 text-sm">✕</button>
+          </div>
+        `;
+        listEl.appendChild(card);
+      });
+    }
+
+    function addDDay() {
+      const titleInput = document.getElementById('dday-title');
+      const dateInput = document.getElementById('dday-date');
+
+      if (!titleInput.value || !dateInput.value) {
+        alert('제목과 날짜를 입력해주세요!');
+        return;
+      }
+
+      ddayItems.push({
+        id: Date.now(),
+        title: titleInput.value,
+        date: dateInput.value
+      });
+
+      titleInput.value = '';
+      dateInput.value = '';
+      renderDDay();
+    }
+
+    function deleteDDay(id) {
+      ddayItems = ddayItems.filter(item => item.id !== id);
+      renderDDay();
+    }
+
+    const snacks = [
+      { name: "꼬깔콘 매콤달콤한맛", tip: "바삭함과 매콤함의 최고 조합!" },
+      { name: "허니버터칩", tip: "달콤짭조름해서 당 충전에 딱!" },
+      { name: "초코파이", tip: "전자레인지에 10초 돌려먹으면 극락!" },
+      { name: "네모스낵", tip: "쉬는시간 순삭 보장 간식!" },
+      { name: "설곤약", tip: "쫄깃한 식감 최강자!" },
+      { name: "요맘때", tip: "상큼한 유산균 아이스크림!" },
+      { name: "망고주스", tip: "달콤 시원한 망고 향가득!" },
+      { name: "보성녹차", tip: "깔끔하게 입가심하기 최고!" },
+      { name: "스팸마요컵밥", tip: "든든한 한 끼 대용으로 딱!" },
+      { name: "참치마요컵밥", tip: "호불호 없는 매점 베스트셀러!" },
+      { name: "핫도그", tip: "케찹 듬뿍 뿌려서 먹기!" },
+      { name: "츄파춥스 젤리", tip: "상큼함이 필요할 때 강추!" },
+      { name: "천하장사 소시지", tip: "간편하고 알찬 영양 간식!" }
+    ];
+
+    function pickSnack() {
+      const resEl = document.getElementById('snack-result');
+      const tipEl = document.getElementById('snack-tip');
+      
+      let counter = 0;
+      const interval = setInterval(() => {
+        const randIndex = Math.floor(Math.random() * snacks.length);
+        resEl.innerText = snacks[randIndex].name;
+        counter++;
+        if (counter > 10) {
+          clearInterval(interval);
+          const finalPick = snacks[Math.floor(Math.random() * snacks.length)];
+          resEl.innerText = finalPick.name;
+          tipEl.innerText = `💡 꿀조합 팁: ${finalPick.tip}`;
         }
+      }, 100);
+    }
 
-        // Custom Toast Box
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.classList.remove('opacity-0');
-            setTimeout(() => {
-                toast.classList.add('opacity-0');
-            }, 2200);
-        }
+    let lastSplitResult = "";
 
-        // ================= CHAPTER 1: TIMER LOGIC =================
-        let timerInterval = null;
-        let totalSeconds = 50 * 60;
-        let initialSeconds = 50 * 60;
-        let isRunning = false;
+    function calculateSplit() {
+      const amount = parseInt(document.getElementById('total-amount').value);
+      const people = parseInt(document.getElementById('total-people').value);
 
-        function setTimerPreset(minutes, title) {
-            clearInterval(timerInterval);
-            isRunning = false;
-            document.getElementById('btn-start').innerHTML = `<i class="fa-solid fa-play"></i><span>시작하기</span>`;
-            totalSeconds = minutes * 60;
-            initialSeconds = minutes * 60;
-            document.getElementById('timer-title').innerText = title;
-            updateTimerDisplay();
-        }
+      if (!amount || !people || people <= 0) {
+        alert('올바른 금액과 인원수를 입력해 주세요!');
+        return;
+      }
 
-        function updateTimerDisplay() {
-            const m = Math.floor(totalSeconds / 60);
-            const s = Math.floor(totalSeconds % 60);
-            document.getElementById('timer-display').innerText = 
-                `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        }
+      const perPerson = Math.ceil(amount / people);
+      const resultBox = document.getElementById('split-result-box');
+      const resultText = document.getElementById('split-result-text');
 
-        function toggleTimer() {
-            const btn = document.getElementById('btn-start');
-            if (isRunning) {
-                clearInterval(timerInterval);
-                isRunning = false;
-                btn.innerHTML = `<i class="fa-solid fa-play"></i><span>계속하기</span>`;
-            } else {
-                if (totalSeconds <= 0) totalSeconds = initialSeconds;
-                isRunning = true;
-                btn.innerHTML = `<i class="fa-solid fa-pause"></i><span>일시정지</span>`;
-                timerInterval = setInterval(() => {
-                    if (totalSeconds > 0) {
-                        totalSeconds--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        isRunning = false;
-                        btn.innerHTML = `<i class="fa-solid fa-play"></i><span>시작하기</span>`;
-                        showToast('⏰ 설정 시간이 종료되었습니다! 수고했어요!');
-                    }
-                }, 1000);
-            }
-        }
+      lastSplitResult = `총 ${amount.toLocaleString()}원 / ${people}명\n👉 1인당: ${perPerson.toLocaleString()}원`;
+      resultText.innerText = lastSplitResult;
+      resultBox.classList.remove('hidden');
+    }
 
-        function resetTimer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-            totalSeconds = initialSeconds;
-            document.getElementById('btn-start').innerHTML = `<i class="fa-solid fa-play"></i><span>시작하기</span>`;
-            updateTimerDisplay();
-        }
+    function copySplitText() {
+      if (!lastSplitResult) return;
+      navigator.clipboard.writeText(lastSplitResult).then(() => {
+        alert('정산 내역이 클립보드에 복사되었습니다!');
+      });
+    }
 
-        // ================= CHAPTER 2: D-DAY LOGIC =================
-        let ddays = JSON.parse(localStorage.getItem('student_ddays')) || [
-            { id: 1, title: "💯 중간고사", date: "2026-12-01" },
-            { id: 2, title: "🎓 수능", date: "2026-11-19" },
-            { id: 3, title: "🏖️ 겨울방학", date: "2026-12-24" }
-        ];
-
-        function saveDDays() {
-            localStorage.setItem('student_ddays', JSON.stringify(ddays));
-        }
-
-        function renderDDays() {
-            const listEl = document.getElementById('dday-list');
-            listEl.innerHTML = '';
-
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            ddays.forEach(item => {
-                const targetDate = new Date(item.date);
-                targetDate.setHours(0, 0, 0, 0);
-
-                const diffTime = targetDate - today;
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-                let badgeText = "";
-                let badgeClass = "";
-
-                if (diffDays > 0) {
-                    badgeText = `D-${diffDays}`;
-                    badgeClass = "bg-brand-100 text-brand-700";
-                } else if (diffDays === 0) {
-                    badgeText = "D-DAY!";
-                    badgeClass = "bg-brand-600 text-white animate-bounce";
-                } else {
-                    badgeText = `D+${Math.abs(diffDays)}`;
-                    badgeClass = "bg-slate-200 text-slate-600";
-                }
-
-                const ddayItem = document.createElement('div');
-                ddayItem.className = 'flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-100 shadow-sm';
-                ddayItem.innerHTML = `
-                    <div>
-                        <span class="font-bold text-slate-800 text-sm block">${item.title}</span>
-                        <span class="text-[11px] text-slate-400">${item.date}</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-bold text-xs px-3 py-1 rounded-xl ${badgeClass}">
-                            ${badgeText}
-                        </span>
-                        <button onclick="deleteDDay(${item.id})" class="text-slate-300 hover:text-brand-600 px-1 text-xs">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                `;
-                listEl.appendChild(ddayItem);
-            });
-        }
-
-        function addCustomDDay() {
-            const titleInput = document.getElementById('dday-title-input');
-            const dateInput = document.getElementById('dday-date-input');
-
-            if (!titleInput.value.trim() || !dateInput.value) {
-                showToast('📌 일정 이름과 날짜를 입력해 주세요!');
-                return;
-            }
-
-            const newDDay = {
-                id: Date.now(),
-                title: titleInput.value.trim(),
-                date: dateInput.value
-            };
-
-            ddays.push(newDDay);
-            saveDDays();
-            titleInput.value = '';
-            dateInput.value = '';
-            renderDDays();
-            showToast('D-Day가 저장되었습니다!');
-        }
-
-        function deleteDDay(id) {
-            ddays = ddays.filter(item => item.id !== id);
-            saveDDays();
-            renderDDays();
-            showToast('D-Day가 삭제되었습니다.');
-        }
-
-        // ================= CHAPTER 3: ROULETTE LOGIC =================
-        const snacks = [
-            { name: "🍿 꼬깔콘 매콤달콤한맛", combo: "손가락에 끼워서 야무지게 먹기" },
-            { name: "🍯 허니버터칩", combo: "단짠단짠 바삭하게 즐기기" },
-            { name: "🍫 초코파이", combo: "우유나 음료수랑 같이 먹기" },
-            { name: "📜 네모스낵", combo: "결대로 찢어 먹는 재미!" },
-            { name: "🌶️ 설곤약", combo: "매콤하고 쫄깃하게 스트레스 날리기" },
-            { name: "🍦 요맘때", combo: "밥 먹고 상큼하게 디저트로 먹기" },
-            { name: "🥭 망고주스", combo: "시원하고 달달하게 한 잔!" },
-            { name: "🍵 보성녹차", combo: "깔끔하고 개운하게 마시기" },
-            { name: "🍚 스팸마요컵밥", combo: "쓱싹쓱싹 비벼서 든든하게 먹기" },
-            { name: "🐟 참치마요컵밥", combo: "김가루 더해서 든든한 한 끼!" },
-            { name: "🌭 핫도그", combo: "케첩 듬뿍 뿌려서 먹기" },
-            { name: "🍬 츄파춥스 젤리", combo: "쉬는시간에 친구랑 나눠 먹기" },
-            { name: "🌭 천하장사 소시지", combo: "간편하게 쏙 까서 먹기" }
-        ];
-        let isSpinning = false;
-
-        function spinSnackRoulette() {
-            if (isSpinning) return;
-            isSpinning = true;
-            const display = document.getElementById('snack-display');
-            const side = document.getElementById('snack-side');
-            const btn = document.getElementById('btn-spin');
-            
-            btn.disabled = true;
-            side.innerText = "";
-            let counter = 0;
-
-            const spinInterval = setInterval(() => {
-                const randomItem = snacks[Math.floor(Math.random() * snacks.length)];
-                display.innerText = randomItem.name;
-                counter++;
-
-                if (counter > 18) {
-                    clearInterval(spinInterval);
-                    const finalChoice = snacks[Math.floor(Math.random() * snacks.length)];
-                    display.innerText = finalChoice.name;
-                    side.innerText = `💡 꿀조합: ${finalChoice.combo}`;
-                    isSpinning = false;
-                    btn.disabled = false;
-                }
-            }, 90);
-        }
-
-        // ================= CHAPTER 4: N-SPLIT LOGIC =================
-        function calculateSplit() {
-            const total = parseInt(document.getElementById('split-total').value) || 0;
-            const people = parseInt(document.getElementById('split-people').value) || 1;
-            const payer = document.getElementById('split-payer').value || '총무';
-            const account = document.getElementById('split-account').value;
-
-            const perPerson = Math.floor(total / people);
-            const remainder = total % people;
-
-            document.getElementById('split-per-person').innerText = `${perPerson.toLocaleString()}원`;
-            document.getElementById('split-rem').innerText = remainder > 0 ? `(잔액 ${remainder}원은 선결제자 몫!)` : '';
-
-            let msg = `[🍔 맛집/N빵 정산]\n`;
-            msg += `• 총 금액: ${total.toLocaleString()}원 (${people}명)\n`;
-            msg += `• 1인당 보내줄 금액: ${perPerson.toLocaleString()}원\n`;
-            msg += `• 입금받을 닉네임: ${payer}\n`;
-            if (account) msg += `• 계좌/송금정보: ${account}\n`;
-            msg += `맛있게 잘 먹었습니다! 👍`;
-
-            document.getElementById('split-text').value = msg;
-        }
-
-        function copySplitText() {
-            const textarea = document.getElementById('split-text');
-            textarea.select();
-            document.execCommand('copy');
-            showToast('정산 문구가 복사되었습니다!');
-        }
-
-        // Initial setup on load
-        window.onload = function() {
-            renderDDays();
-            calculateSplit();
-        };
-    </script>
+    renderDDay();
+  </script>
 </body>
 </html>
